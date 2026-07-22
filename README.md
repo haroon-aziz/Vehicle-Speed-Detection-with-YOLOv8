@@ -44,7 +44,7 @@ Naive speed estimation produces absurd values (10,000+ km/h). This implementatio
 
 ```bash
 !pip install -q ultralytics opencv-python numpy
-!python vehicle_speed.py
+
 ```
 
 3. Upload your road video as `input.mp4` (or change `VIDEO_PATH` in the script)
@@ -53,7 +53,7 @@ Naive speed estimation produces absurd values (10,000+ km/h). This implementatio
 ### Local
 
 ```bash
-git clone https://github.com/<your-username>/vehicle-speed-detection.git
+git clone https://github.com/<haroon-aziz>/vehicle-speed-detection.git
 cd vehicle-speed-detection
 pip install -r requirements.txt
 python vehicle_speed.py
