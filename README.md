@@ -7,13 +7,7 @@ Real-time traffic analytics that detects vehicles in road video, tracks them acr
 ![OpenCV](https://img.shields.io/badge/OpenCV-4.x-green)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
-## 📸 Demo
 
-<!-- Replace these with your own screenshots after running the pipeline -->
-<p align="center">
-  <img src="assets/demo_output.jpg" width="720" alt="Annotated output — vehicles with speed labels">
-</p>
-<p align="center"><em>Detected vehicles with per-vehicle speed labels. Green &lt; 60 km/h · Yellow 60–100 km/h · Red &gt; 100 km/h</em></p>
 
 <p align="center">
   <img src="assets/pipeline.svg" width="720" alt="Pipeline diagram">
