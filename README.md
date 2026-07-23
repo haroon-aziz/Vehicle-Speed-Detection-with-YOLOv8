@@ -11,7 +11,7 @@ Real-time traffic analytics that detects vehicles in road video, tracks them acr
 
 <!-- Replace these with your own screenshots after running the pipeline -->
 <p align="center">
-  <img src="assets/demo_output.jpg" width="720" alt="Annotated output — vehicles with speed labels">
+  <img src="assets/output.jpeg" width="720" alt="Annotated output — vehicles with speed labels">
 </p>
 <p align="center"><em>Detected vehicles with per-vehicle speed labels. Green &lt; 60 km/h · Yellow 60–100 km/h · Red &gt; 100 km/h</em></p>
 
