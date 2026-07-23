@@ -7,7 +7,13 @@ Real-time traffic analytics that detects vehicles in road video, tracks them acr
 ![OpenCV](https://img.shields.io/badge/OpenCV-4.x-green)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
+## 📸 Demo
 
+<!-- Replace these with your own screenshots after running the pipeline -->
+<p align="center">
+  <img src="assets/demo_output.jpg" width="720" alt="Annotated output — vehicles with speed labels">
+</p>
+<p align="center"><em>Detected vehicles with per-vehicle speed labels. Green &lt; 60 km/h · Yellow 60–100 km/h · Red &gt; 100 km/h</em></p>
 
 <p align="center">
   <img src="assets/pipeline.svg" width="720" alt="Pipeline diagram">
@@ -44,7 +50,7 @@ Naive speed estimation produces absurd values (10,000+ km/h). This implementatio
 
 ```bash
 !pip install -q ultralytics opencv-python numpy
-
+!python vehicle_speed.py
 ```
 
 3. Upload your road video as `input.mp4` (or change `VIDEO_PATH` in the script)
@@ -53,11 +59,28 @@ Naive speed estimation produces absurd values (10,000+ km/h). This implementatio
 ### Local
 
 ```bash
-git clone https://github.com/<haroon-aziz>/vehicle-speed-detection.git
+git clone https://github.com/<your-username>/vehicle-speed-detection.git
 cd vehicle-speed-detection
 pip install -r requirements.txt
 python vehicle_speed.py
 ```
+
+### 🎥 Live Webcam / IP Camera Mode
+
+`vehicle_speed_webcam.py` runs the same pipeline on a live camera feed (local machine only — Colab cannot access your webcam):
+
+```bash
+python vehicle_speed_webcam.py                     # default webcam
+python vehicle_speed_webcam.py --source 1          # second camera
+python vehicle_speed_webcam.py --source "rtsp://user:pass@ip:554/stream"  # IP/CCTV camera
+```
+
+- Speeds are computed from **wall-clock time**, not the camera's reported FPS, so they stay accurate even when processing lags
+- The calibration zone is drawn live in magenta so you can aim the camera and line it up with the road
+- Hotkeys: **R** starts/stops recording annotated footage to `output_webcam.mp4`, **Q** quits
+- Uses `yolov8n.pt` by default for real-time CPU performance — switch to `yolov8s`/`m` in the script if you have a GPU
+
+Calibrate `SOURCE` and `TARGET_WIDTH/HEIGHT` in the script for your camera view, same as the video version.
 
 ## 📐 Calibration (Required for Accurate Speeds)
 
@@ -100,7 +123,8 @@ TARGET_HEIGHT = 60.0   # real length in meters
 
 ```
 vehicle-speed-detection/
-├── vehicle_speed.py     # Main pipeline (detection → tracking → speed)
+├── vehicle_speed.py         # Main pipeline for video files (detection → tracking → speed)
+├── vehicle_speed_webcam.py  # Live webcam / RTSP camera version with recording hotkey
 ├── requirements.txt
 ├── assets/              # README images (add your own screenshots here)
 │   └── pipeline.svg
@@ -112,7 +136,7 @@ vehicle-speed-detection/
 - [ ] Automatic camera calibration from lane markings
 - [ ] Per-lane vehicle counting and average-speed statistics
 - [ ] CSV/JSON export of per-vehicle logs
-- [ ] Live RTSP/webcam stream support
+- [x] Live RTSP/webcam stream support
 - [ ] Speeding-violation snapshots with license plate crops
 
 ## 📄 License
