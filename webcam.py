@@ -8,28 +8,22 @@ import numpy as np
 from ultralytics import YOLO
 
 
-MODEL_NAME = "yolov8n.pt"   # nano for real-time on CPU; use s/m with a GPU
+MODEL_NAME = "yolov8n.pt"  
 CONF_THRES = 0.3
 OUTPUT_PATH = "output_webcam.mp4"
 
-# Vehicle classes in COCO: 2=car, 3=motorcycle, 5=bus, 7=truck
+k
 VEHICLE_CLASSES = {2: "Car", 3: "Motorcycle", 5: "Bus", 7: "Truck"}
 
-# ------------------- ROAD CALIBRATION -----------------------
-# 4 pixel points forming a rectangle ON THE ROAD in your camera view,
-# ordered: top-left, top-right, bottom-right, bottom-left.
-# Defaults assume a 640x480 webcam looking down a road — YOU MUST TUNE
-# THESE for your camera position. Lane width ~3.5 m; dashed marking
-# cycle (stripe + gap) ~9 m are handy real-world rulers.
 SOURCE = np.array([
-    [220, 160],   # top-left     (far end of road)
-    [420, 160],   # top-right
-    [600, 470],   # bottom-right (near end of road)
-    [40,  470],   # bottom-left
+    [220, 160],   
+    [420, 160], 
+    [600, 470],   
+    [40,  470],  
 ], dtype=np.float32)
 
-TARGET_WIDTH  = 7.0    # meters (real width of the rectangle)
-TARGET_HEIGHT = 30.0   # meters (real length of the rectangle)
+TARGET_WIDTH  = 7.0    
+TARGET_HEIGHT = 30.0   
 
 TARGET = np.array([
     [0, 0],
@@ -45,11 +39,11 @@ def to_bev(point_xy):
     out = cv2.perspectiveTransform(pt, M)
     return float(out[0, 0, 0]), float(out[0, 0, 1])
 
-# -------------------- SPEED SETTINGS ------------------------
+
 SMOOTH_SECONDS    = 0.7
 MIN_TRACK_LEN     = 3
 MIN_DT_SECONDS    = 0.4
-MAX_STEP_M        = 4.0    # per-frame teleport guard (ID switches)
+MAX_STEP_M        = 4.0    
 MAX_PLAUSIBLE_KPH = 200
 
 def speed_color(kph):
@@ -57,7 +51,7 @@ def speed_color(kph):
     if kph < 100: return (0, 255, 255)
     return (0, 0, 255)
 
-# ------------------------ MAIN ------------------------------
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--source", default="0",
@@ -74,12 +68,11 @@ def main():
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)) or 480
     print(f"Camera opened: {width}x{height}")
 
-    # Webcams often misreport FPS, so we measure wall-clock time per
-    # track point instead of assuming a fixed frame rate.
+
     writer = None
     recording = False
 
-    # tid -> deque of (bev_x, bev_y, timestamp)
+   
     history = defaultdict(lambda: deque(maxlen=64))
     speeds  = {}
     last_seen = {}
@@ -93,7 +86,7 @@ def main():
             break
         now = time.time()
 
-        # live FPS estimate (smoothed) for the on-screen counter
+      
         dt_frame = now - t_prev
         t_prev = now
         if dt_frame > 0:
@@ -122,7 +115,7 @@ def main():
                 if inside:
                     bx, by = to_bev((cx, bottom_y))
 
-                    # teleport guard (ID switch)
+                    
                     if history[tid]:
                         pbx, pby, pt_ = history[tid][-1]
                         step_dt = max(now - pt_, 1e-6)
@@ -132,7 +125,7 @@ def main():
                     history[tid].append((bx, by, now))
                     last_seen[tid] = now
 
-                    # drop points older than the smoothing window
+                  
                     while history[tid] and now - history[tid][0][2] > SMOOTH_SECONDS:
                         history[tid].popleft()
 
@@ -162,11 +155,11 @@ def main():
                 cv2.putText(frame, label, (p1[0] + 2, p1[1] - 5),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.55, (0, 0, 0), 2)
 
-        # forget stale tracks
+       
         for tid in [t for t, ts in last_seen.items() if now - ts > 3.0]:
             history.pop(tid, None); speeds.pop(tid, None); last_seen.pop(tid, None)
 
-        # HUD: calibration zone, legend, FPS, recording indicator
+     
         cv2.polylines(frame, [SOURCE.astype(int)], True, (255, 0, 255), 2)
         for i, (txt, c) in enumerate([("< 60 km/h", (0, 255, 0)),
                                       ("60-100 km/h", (0, 255, 255)),
