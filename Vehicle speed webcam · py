@@ -1,21 +1,3 @@
-# ============================================================
-# Live Vehicle Speed Detection from Webcam
-# YOLOv8 + ByteTrack + Homography — single-file, runs locally
-#
-# USAGE (local machine, not Colab — Colab can't access your webcam
-# from a plain script):
-#   pip install ultralytics opencv-python numpy
-#   python vehicle_speed_webcam.py            # uses default webcam (0)
-#   python vehicle_speed_webcam.py --source 1 # another camera index
-#   python vehicle_speed_webcam.py --source "rtsp://..."  # IP camera
-#
-# Press  Q  to quit,  R  to start/stop recording to output_webcam.mp4
-#
-# IMPORTANT: point the camera at a road and calibrate SOURCE +
-# TARGET_WIDTH/HEIGHT below for YOUR camera view, exactly like the
-# video version — otherwise speeds will be wrong. The calibration
-# zone is drawn in magenta so you can line it up live.
-# ============================================================
 
 import argparse
 import time
@@ -25,7 +7,7 @@ import cv2
 import numpy as np
 from ultralytics import YOLO
 
-# ----------------------- SETTINGS ---------------------------
+
 MODEL_NAME = "yolov8n.pt"   # nano for real-time on CPU; use s/m with a GPU
 CONF_THRES = 0.3
 OUTPUT_PATH = "output_webcam.mp4"
