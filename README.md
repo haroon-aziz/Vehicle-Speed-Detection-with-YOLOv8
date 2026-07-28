@@ -7,9 +7,9 @@ Real-time traffic analytics that detects vehicles in road video, tracks them acr
 ![OpenCV](https://img.shields.io/badge/OpenCV-4.x-green)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
-## 📸 Demo
+##  Demo
 
-<!-- Replace these with your own screenshots after running the pipeline -->
+
 <p align="center">
   <img src="assets/output.jpeg" width="720" alt="Annotated output — vehicles with speed labels">
 </p>
@@ -59,13 +59,13 @@ Naive speed estimation produces absurd values (10,000+ km/h). This implementatio
 ### Local
 
 ```bash
-git clone https://github.com/<your-username>/vehicle-speed-detection.git
+git clone(https://github.com/haroon-aziz/Vehicle-Speed-Detection-with-YOLOv8.git)
 cd vehicle-speed-detection
 pip install -r requirements.txt
 python vehicle_speed.py
 ```
 
-### 🎥 Live Webcam / IP Camera Mode
+###  Live Webcam / IP Camera Mode
 
 `vehicle_speed_webcam.py` runs the same pipeline on a live camera feed (local machine only — Colab cannot access your webcam):
 
@@ -82,7 +82,7 @@ python vehicle_speed_webcam.py --source "rtsp://user:pass@ip:554/stream"  # IP/C
 
 Calibrate `SOURCE` and `TARGET_WIDTH/HEIGHT` in the script for your camera view, same as the video version.
 
-## 📐 Calibration (Required for Accurate Speeds)
+##  Calibration (Required for Accurate Speeds)
 
 Speed accuracy depends entirely on the **homography calibration**. You must tell the script where the road is in your video and how big it is in real life.
 
@@ -106,9 +106,9 @@ TARGET_HEIGHT = 60.0   # real length in meters
 - Dashed lane markings are a free ruler: one stripe + gap cycle ≈ 9 m on normal roads (longer on motorways)
 - The script draws the calibration zone in **magenta** on the output — check that it sits flat on the road where vehicles drive
 - If all speeds are off by a consistent factor, adjust `TARGET_HEIGHT`
-- ⚠️ Sped-up / timelapse footage inflates all speeds by the speedup factor — use real-time video
+-  Sped-up / timelapse footage inflates all speeds by the speedup factor — use real-time video
 
-## 🔧 Configuration
+##  Configuration
 
 | Setting | Default | Description |
 |---|---|---|
@@ -119,7 +119,7 @@ TARGET_HEIGHT = 60.0   # real length in meters
 | `MAX_STEP_M` | `4.0` | Max plausible per-frame movement (teleport guard) |
 | `MAX_PLAUSIBLE_KPH` | `200` | Hard cap on reported speeds |
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 vehicle-speed-detection/
@@ -131,7 +131,7 @@ vehicle-speed-detection/
 └── README.md
 ```
 
-## 🛣️ Roadmap / Ideas
+##  Roadmap / Ideas
 
 - [ ] Automatic camera calibration from lane markings
 - [ ] Per-lane vehicle counting and average-speed statistics
@@ -139,11 +139,11 @@ vehicle-speed-detection/
 - [x] Live RTSP/webcam stream support
 - [ ] Speeding-violation snapshots with license plate crops
 
-## 📄 License
+##  License
 
 MIT — free to use, modify, and distribute.
 
-## 🙏 Acknowledgements
+##  Acknowledgements
 
 - [Ultralytics YOLOv8](https://github.com/ultralytics/ultralytics)
 - [ByteTrack](https://github.com/ifzhang/ByteTrack)
